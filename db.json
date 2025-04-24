@@ -1,0 +1,18 @@
+{
+    "users": [],
+    "workouts": [
+      {
+        "id": 1,
+        "title": "Push Day",
+        "description": "Chest, Shoulders, Triceps",
+        "exercises": ["Bench Press", "Overhead Press", "Tricep Dips"]
+      },
+      {
+        "id": 2,
+        "title": "Leg Day",
+        "description": "Quads, Hamstrings, Calves",
+        "exercises": ["Squats", "Lunges", "Leg Press"]
+      }
+    ]
+  }
+  
