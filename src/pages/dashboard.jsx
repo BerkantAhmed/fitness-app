@@ -23,6 +23,15 @@ const handleCreate = async (e) => {
     description: newWorkout.description,
     exercises: exercisesArray
   };
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3001/workouts/${id}`);
+      setWorkouts(workouts.filter(workout => workout.id !== id));
+    } catch (error) {
+      alert('Грешка при изтриване на тренировка');
+    }
+  };
+  
 
   try {
     const res = await axios.post('http://localhost:3001/workouts', workoutData);
@@ -97,6 +106,9 @@ export default function Dashboard() {
                 <li key={idx}>{ex}</li>
               ))}
             </ul>
+            <button onClick={() => handleDelete(w.id)} style={{ background: 'red', color: 'white' }}>
+      Delete
+    </button>
           </div>
         ))
       )}
