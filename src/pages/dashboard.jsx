@@ -7,6 +7,7 @@ const [newWorkout, setNewWorkout] = useState({
   description: '',
   exercises: ''
 });
+const [editingWorkout, setEditingWorkout] = useState(null);
 
 
 const handleInputChange = (e) => {
@@ -29,6 +30,26 @@ const handleCreate = async (e) => {
       setWorkouts(workouts.filter(workout => workout.id !== id));
     } catch (error) {
       alert('Грешка при изтриване на тренировка');
+    }
+  };
+  const startEditing = (workout) => {
+    setEditingWorkout(workout);
+  };
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const updatedWorkout = {
+        ...editingWorkout,
+        exercises: editingWorkout.exercises.split(',').map(ex => ex.trim())
+      };
+      
+      await axios.put(`http://localhost:3001/workouts/${editingWorkout.id}`, updatedWorkout);
+      
+      setWorkouts(workouts.map(w => (w.id === editingWorkout.id ? updatedWorkout : w)));
+      setEditingWorkout(null);
+    } catch (error) {
+      alert('Грешка при обновяване на тренировка');
     }
   };
   
@@ -93,6 +114,35 @@ export default function Dashboard() {
   <br />
   <button type="submit">Add Workout</button>
 </form>
+{editingWorkout && (
+  <form onSubmit={handleUpdate}>
+    <h2>Edit Workout</h2>
+    <input
+      type="text"
+      name="title"
+      placeholder="Title"
+      value={editingWorkout.title}
+      onChange={(e) => setEditingWorkout({ ...editingWorkout, title: e.target.value })}
+    />
+    <input
+      type="text"
+      name="description"
+      placeholder="Description"
+      value={editingWorkout.description}
+      onChange={(e) => setEditingWorkout({ ...editingWorkout, description: e.target.value })}
+    />
+    <input
+      type="text"
+      name="exercises"
+      placeholder="Exercises (comma separated)"
+      value={editingWorkout.exercises}
+      onChange={(e) => setEditingWorkout({ ...editingWorkout, exercises: e.target.value })}
+    />
+    <button type="submit">Update Workout</button>
+    <button type="button" onClick={() => setEditingWorkout(null)}>Cancel</button>
+  </form>
+)}
+
 
       {workouts.length === 0 ? (
         <p>Loading workouts...</p>
@@ -106,9 +156,12 @@ export default function Dashboard() {
                 <li key={idx}>{ex}</li>
               ))}
             </ul>
+            <button onClick={() => startEditing(w)}>Edit</button>
             <button onClick={() => handleDelete(w.id)} style={{ background: 'red', color: 'white' }}>
       Delete
     </button>
+    
+
           </div>
         ))
       )}
