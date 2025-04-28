@@ -160,11 +160,11 @@ export default function Dashboard() {
             <button onClick={() => handleDelete(w.id)} style={{ background: 'red', color: 'white' }}>
       Delete
     </button>
-    
 
-          </div>
+        </div>
         ))
       )}
     </div>
+    
   );
 }
