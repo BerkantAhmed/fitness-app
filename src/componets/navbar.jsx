@@ -11,17 +11,19 @@ export default function Navbar() {
   const isLoggedIn = localStorage.getItem('user');
 
   return (
-    <nav style={{ padding: '10px', borderBottom: '1px solid black' }}>
-      <Link to="/">Home</Link> | 
-      {!isLoggedIn && <Link to="/register">Register</Link>} | 
-      {!isLoggedIn && <Link to="/login">Login</Link>} | 
-      {isLoggedIn && <Link to="/dashboard">Dashboard</Link>} | 
-      {isLoggedIn && (
-        <button onClick={handleLogout} style={{ marginLeft: '10px', background: 'red', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px' }}>
-          Logout
-        </button>
-      )}
-    </nav>
+    <nav style={{ padding: '10px', background: '#3498db', color: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+  <Link to="/" style={{ color: 'white', fontSize: '20px', textDecoration: 'none' }}>Home</Link>
+  {!isLoggedIn && <Link to="/register" style={{ color: 'white', marginLeft: '15px' }}>Register</Link>}
+  {!isLoggedIn && <Link to="/login" style={{ color: 'white', marginLeft: '15px' }}>Login</Link>}
+  {isLoggedIn && <Link to="/dashboard" style={{ color: 'white', marginLeft: '15px' }}>Dashboard</Link>}
+  {isLoggedIn && (
+    <button onClick={handleLogout} style={{ marginLeft: '15px', background: '#e74c3c', color: 'white', padding: '8px 15px', borderRadius: '5px', border: 'none' }}>
+      Logout
+    </button>
+  )}
+</nav>
+
   );
 }
+
 
